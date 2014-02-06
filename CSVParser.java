@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,21 +13,28 @@ import java.util.List;
 
 public class CSVParser {
 	public static void main(String[] args) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String csvPath = "";
+        
+        System.out.println("Enter your CSV file path:");
+        try {
+			csvPath = br.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
 		CSVParser obj = new CSVParser();
-		obj.execute();
+		obj.execute(csvPath);
 	}
 	
-	public void execute() {
+	public void execute(String csvPath) {
 		//Lists for values:
 		List<String[]> dArrayList = new ArrayList<String[]>();
 		List<String[]> eArrayList = new ArrayList<String[]>();
 		List<String[]> sArrayList = new ArrayList<String[]>();
-		
-		//Variables for parsing:
-		String csvFile = "Employees.csv";
 
 		try {
-			loadCSV(dArrayList, eArrayList, sArrayList, csvFile);
+			loadCSV(dArrayList, eArrayList, sArrayList, csvPath);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -63,12 +71,12 @@ public class CSVParser {
 		}
 	}
 	
-	//Loads given Lists with data provided from csvFile.
-	private static void loadCSV(List<String[]> dArrayList, List<String[]> eArrayList, List<String[]> sArrayList, String csvFile) throws IOException {
+	//Loads given Lists with data provided from csvPath.
+	private static void loadCSV(List<String[]> dArrayList, List<String[]> eArrayList, List<String[]> sArrayList, String csvPath) throws IOException {
 		BufferedReader br = null;
 		String line;
 		
-		br = new BufferedReader(new FileReader(csvFile));
+		br = new BufferedReader(new FileReader(csvPath));
 		while ((line = br.readLine()) != null) {
 
 			String[] values = line.split(",");
