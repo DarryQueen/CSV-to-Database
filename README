@@ -1,0 +1,6 @@
+System that parses through CSV, converts it into INSERT statements, and runs quick queries through the statements.
+
+CSVParser.java:		Contains source code for CSV parser, reads input from Employees.csv and outputs a file insert_commands.sql with corresponding INSERT statements.
+insert_commands.sql: 	Necessary INSERT statements from Employees.csv.
+schema.sql: 		Schema statements for table.
+queries.sql:		Some query statements.
