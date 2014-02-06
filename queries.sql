@@ -17,13 +17,14 @@ WHERE salary_amt=(SELECT MIN(salary_amt) FROM salary WHERE end_date IS NULL) AND
 
 #Select name and salary of highest paid employee in "ENGINEERING" who is not a manager.
 SELECT first_name,last_name,salary_amt,department1,department2
-FROM salary RIGHT JOIN employee
+FROM salary JOIN employee
 	ON salary.emp_id=employee.emp_id
-WHERE salary_amt=(SELECT MAX(salary_amt) FROM salary WHERE 
-	salary.emp_id IN (SELECT employee.emp_id FROM employee,department WHERE
-		employee.type<>"MANAGER"
+WHERE salary_amt=(SELECT MAX(salary_amt)
+	FROM salary,employee,department WHERE 
+		salary.emp_id=employee.emp_id
+		AND employee.type<>"MANAGER"
 		AND (employee.department1=department.dep_id OR employee.department2=department.dep_id)
-		AND department.dep_name="ENGINEERING"))
+		AND department.dep_name="ENGINEERING")
 	AND employee.type<>"MANAGER"
 	AND (employee.department1 IN (SELECT dep_id FROM department WHERE dep_name="ENGINEERING")
 		OR employee.department2 IN (SELECT dep_id FROM department WHERE dep_name="ENGINEERING"));
